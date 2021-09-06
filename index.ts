@@ -15,13 +15,13 @@ async function cronJob() {
   const now = new Date()
   const formatedDate = dayjs(now).format('dddd DD MMMM YYYY HH:mm')
   const [currentYear, currentMonth, currentDay, currentHour] = dayjs(now)
-    .format('YYYY-M-D-h')
+    .format('YYYY-M-D-H')
     .split('-')
 
   const logs = await getLogs()
   const lastLog = logs.at(-1) ?? 1
   const [lastLogYear, lastLogMonth, lastLogDay, lastLogHour] = dayjs(lastLog)
-    .format('YYYY-M-D-h')
+    .format('YYYY-M-D-H')
     .split('-')
 
   const hasAlreadyBeenDone = {

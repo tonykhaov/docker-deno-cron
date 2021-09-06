@@ -8,4 +8,4 @@ This is a cron job, that will run on a docker container and console log every 10
 minutes (HH:00:SS, HH:10:SS, HH:20:SS, etc.).
 
 1. Build the docker image: `docker build -t deno-cron .`
-2. Run the docker container `docker run deno-cron`
+2. Run the docker container `docker run --restart=unless-stopped deno-cron`

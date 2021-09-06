@@ -12,9 +12,9 @@ const everyTenMinutes = '*/10 * * * *'
 cron(everyTenMinutes, cronJob)
 
 async function cronJob() {
-  const date = new Date()
-  const formatedDate = dayjs(date).format('dddd DD MMMM YYYY HH:mm')
-  const [currentYear, currentMonth, currentDay, currentHour] = dayjs(date)
+  const now = new Date()
+  const formatedDate = dayjs(now).format('dddd DD MMMM YYYY HH:mm')
+  const [currentYear, currentMonth, currentDay, currentHour] = dayjs(now)
     .format('YYYY-M-D-h')
     .split('-')
 
@@ -39,7 +39,7 @@ async function cronJob() {
   ) {
     console.log(formatedDate, 'I did not create a log file')
   } else {
-    await createLog(date)
+    await createLog(now)
     console.log(
       formatedDate,
       'I created a log file because no log was created this hour',

@@ -5,17 +5,13 @@ async function createLog(date: Date) {
   await file.write(data)
 }
 
-async function getLastLog() {
+async function getLogs() {
   const logs = []
   for await (const log of Deno.readDir('./logs')) {
     logs.push(log.name)
   }
 
-  const lastLog = logs
-    .map((log) => Number(log))
-    .sort((a, b) => (a > b ? -1 : 1))
-    .at(0)
-  return lastLog
+  return logs.map((log) => Number(log)).filter((log) => typeof log === 'number')
 }
 
-export { createLog, getLastLog }
+export { createLog, getLogs }

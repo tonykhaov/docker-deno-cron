@@ -1,4 +1,4 @@
-import { exists } from 'https://deno.land/std@0.106.0/fs/mod.ts'
+import { exists } from 'https://deno.land/std@0.106.0/fs/exists.ts'
 import { cron } from 'https://deno.land/x/deno_cron@v1.0.0/cron.ts'
 import dayjs from 'https://cdn.skypack.dev/dayjs@1.10.4'
 import { createLog, getLogs } from './helpers.ts'

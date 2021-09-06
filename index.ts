@@ -31,13 +31,14 @@ async function cronJob() {
     thisHour: lastLogHour === currentHour,
   }
 
-  if (
+  const hasDoneJob =
     hasAlreadyBeenDone.thisYear &&
     hasAlreadyBeenDone.thisMonth &&
     hasAlreadyBeenDone.today &&
     hasAlreadyBeenDone.thisHour
-  ) {
-    console.log(formatedDate, 'I did not create a log file')
+
+  if (hasDoneJob) {
+    console.log(formatedDate, 'I refuse to create a log file')
   } else {
     await createLog(now)
     console.log(

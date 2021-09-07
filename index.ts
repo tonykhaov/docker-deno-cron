@@ -19,7 +19,7 @@ async function cronJob() {
     .split('-')
 
   const logs = await getLogs()
-  const lastLog = logs.at(-1) ?? 1
+  const lastLog = logs.sort((a, b) => (a > b ? -1 : 1))[0] ?? null
   const [lastLogYear, lastLogMonth, lastLogDay, lastLogHour] = dayjs(lastLog)
     .format('YYYY-M-D-H')
     .split('-')

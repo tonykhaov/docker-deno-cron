@@ -1,10 +1,10 @@
 import { exists } from 'https://deno.land/std@0.106.0/fs/exists.ts'
 import { cron } from 'https://deno.land/x/deno_cron@v1.0.0/cron.ts'
 import dayjs from 'https://cdn.skypack.dev/dayjs@1.10.6?dts'
-import { createLog, getLogs } from './helpers.ts'
+import { createLog, getLastLog } from './helpers.ts'
 
 const hasLogsDir = await exists('./logs')
-if (!hasLogsDir) Deno.mkdir('./logs')
+if (!hasLogsDir) await Deno.create('./logs')
 
 console.log('Start cron job:', dayjs().format('dddd DD MMMM YYYY HH:mm'))
 
@@ -18,8 +18,7 @@ async function cronJob() {
     .format('YYYY-M-D-H')
     .split('-')
 
-  const logs = await getLogs()
-  const lastLog = logs.sort((a, b) => (a > b ? -1 : 1))[0] ?? null
+  const lastLog = await getLastLog()
   const [lastLogYear, lastLogMonth, lastLogDay, lastLogHour] = dayjs(lastLog)
     .format('YYYY-M-D-H')
     .split('-')
@@ -37,13 +36,13 @@ async function cronJob() {
     hasAlreadyBeenDone.today &&
     hasAlreadyBeenDone.thisHour
 
-  if (hasDoneJob) {
-    console.log(formatedDate, 'I refuse to create a log file')
-  } else {
+  if (!hasDoneJob) {
     await createLog(now)
     console.log(
       formatedDate,
       'I created a log file because no log was created this hour',
     )
+  } else {
+    console.log(formatedDate, 'I refuse to create a log file')
   }
 }
